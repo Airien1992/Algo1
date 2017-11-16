@@ -13,7 +13,7 @@
 <html lang = "en">
 
    <head>
-      <title>Login project</title>
+      <title>Recover your credentials</title>
       <link href = "css/bootstrap.min.css" rel = "stylesheet">
 
       <style>
@@ -82,28 +82,26 @@
 
          <?php
             $msg = '';
-            if (isset($_POST['login']) && !empty($_POST['username'])
-               && !empty($_POST['password'])) {
+            if (isset($_POST['recover']) && !empty($_POST['username'])
+               && !empty($_POST['email']) && !empty($_POST['naam'])) {
 
-				global $Pass;
 				global $mysqli;
 				$User = $_POST['username'];
-				$Pass = $_POST['password'];
+				$Email = $_POST['email'];
+				$Name = $_POST['naam'];
 				$mysqli = initialize_mysql_connection();
-				$sql="SELECT * FROM members WHERE username='$User' and password='$Pass'";
+				$sql="SELECT * FROM members WHERE username='$User' and email='$Email' and naam='$Name'";
 				$result=$mysqli->query($sql);
 				$row=$result->fetch_assoc();
-				if( $row['username']==$User){
-                  $_SESSION['valid'] = true;
-                  $_SESSION['timeout'] = time();
-                  $_SESSION['username']=$User;
+				if( $row['username']==$User && $row['email']==$Email){
+					echo "Uw naam is:";echo $row['naam']; echo "\n<br />\n<br />";
+					echo "Uw gebruikersnaam is: ";echo $row['username']; echo "\n<br />\n<br />";
+					echo "Uw passwoord is: ";echo $row['password']; echo "\n<br />\n<br />";
+					echo "Uw email is: ";echo $row['email']; echo "\n<br />\n<br />";
                   close_mysql_connection();
-				  header('Location: HotelQuest.php');
-
-				  echo 'You have entered valid use name and password';
         }
                 else {
-                  $msg = 'Wrong username or password';
+                  $msg = 'Wrong username or email or name';
                   close_mysql_connection();
                }
             }
@@ -119,13 +117,16 @@
 				<input type = "text" class = "form-control" name = "username" placeholder = "username" required autofocus></br>
 			</div>
 			<div class="form-group">
-				<label>Password:</label>
-				<input type = "password" class = "form-control" name = "password" placeholder = "password" required>
+				<label>Email:</label>
+				<input type = "text" class = "form-control" name = "email" placeholder = "email" required>
 			</div>
 			<div class="form-group">
-				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "login">Login</button>
-				<a href="register.php">Registreren</a>
-				<a href="recovery.php">Recovery</a>
+				<label>Naam:</label>
+				<input type = "text" class = "form-control" name = "naam" placeholder = "naam" required>
+			</div>
+			<div class="form-group">
+				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "recover">Recover</button>
+				<a href="login.php">Go back to Login page</a>
 			</div>
 			   
          </form>

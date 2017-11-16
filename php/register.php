@@ -64,17 +64,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     <title>Sign Up</title>
-	<!-- 
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style> -->
 </head>
 <body>
 	<div class="container">
 			<div class="row main">
 				<div class="main-login main-center">
-				<h5>Sign up once and watch any of our free demos.</h5>
 					<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 						
 						<div class="form-group">
@@ -128,41 +122,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						</div>
 
 						<div class="form-group ">
-						<input type="submit" name="register" class="btn btn-primary" value="Submit">
-							<!--<a target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a> -->
+						<input type="submit" name="register" class="btn btn-primary" value="Register">
+						<a href="login.php">Go back to login page</a>
 						</div>
 						
 					</form>
 				</div>
 			</div>
 		</div>
-
-		 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap"></script>
-    <!--<div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Username:<sup>*</sup></label>
-                <input type="text" name="username"class="form-control">
-            </div>    
-            <div class="form-group">
-                <label>Password:<sup>*</sup></label>
-                <input type="password" name="password" class="form-control" >
-            </div>
-            <div class="form-group">
-                <label>Confirm Password:<sup>*</sup></label>
-                <input type="password" name="confirm_password" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="submit" name="register" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
-        </form>
-    </div>    -->
 </body>
 </html>
