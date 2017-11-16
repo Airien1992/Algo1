@@ -29,14 +29,14 @@ else {   $gebruiker = "ufo";  }
   <!-- My CSS -->
   <link rel="stylesheet" type="text/css" href="css\\styles.css"/>
   <!-- My javascript -->
-  <script src="map.js"></script>
+  <script src="../map.js"></script>
 
   <script>
   var map;
   var myPos = new google.maps.LatLng(51.04972991,3.7229769);
   var myMarker = new google.maps.Marker({
         position: myPos,
-        icon: "resources/MarkerWithSunglasses.png"
+        icon: "../resources/MarkerWithSunglasses.png"
       });;
 
 
