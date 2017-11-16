@@ -1,0 +1,13 @@
+DROP TABLE markers; 
+
+
+CREATE TABLE markers (node_id BIGINT, node_lat DOUBLE,node_lon DOUBLE);
+
+
+INSERT INTO markers (node_id, node_lat, node_lon)
+VALUES ('2586264099', 51.0476622, 3.7271271);
+
+
+INSERT INTO markers (node_id, node_lat, node_lon)
+VALUES ('3192105308', 51.0475748, 3.7255051)
+;
