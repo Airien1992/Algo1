@@ -1,21 +1,58 @@
 <?php
-require_once "config.php";
-require_once "func.php";
-
+require_once 'config.php';
+require_once 'func.php';
 session_start();
 if($_SESSION['valid'] == true){   $gebruiker = $_SESSION['username']; }
 else {   $gebruiker = "ufo";  }
-initialize_mysql_connection();
+$mysqli = initialize_mysql_connection();
 
+try{
+	if(isset($_GET['from_lat'])) $from_lat = $_GET['from_lat']; else throw new Exception("Input Error: from_lat not set", 1);
+	if(isset($_GET['from_lon'])) $from_lon = $_GET['from_lon']; else throw new Exception("Input Error: from_lon not set", 2);
+	if(isset($_GET['transport'])) $transport = $_GET['transport']; else throw new Exception("Input Error: transport not set", 3);
+	echo "HI";
+	$to_node="'1634943259'";
+	echo "good";
+	$data = json_dijkstra($from_lat, $from_lon ,$to_node, $transport);
+	echo "LO";
+}
+catch(Exception $e){
+	echo "<p>".$e->getMessage()."</p>";
+	echo "nooooo";
+	exit();
+}
+$dijkstra = json_decode($data);
+
+$pathlength = count($dijkstra->path);
+echo $pathlength;
+$lats = array();
+$lons = array();
+
+function getLonLat($node_id){
+  global $mysqli;
+  $sql = "SELECT lat, lon
+          FROM `osm_nodes`
+          WHERE `id` = '$node_id'";
+  $retval = $mysqli->query($sql);
+  $lonlat = $retval->fetch_assoc();
+  return $lonlat;
+}
+
+for ($i = 0; $i < $pathlength; $i++) {
+    $lonlat = getLonLat($dijkstra->path[$i]);
+    array_push($lats, $lonlat['lat']);
+    array_push($lons, $lonlat['lon']);
+}
 
 ?>
 
+
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+  <title>Restos</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  <meta charset="utf-8">
-  <title>Hotel Quest</title>
+    <meta charset="utf-8">
   <!-- Google Maps CSS -->
   <style>  html, body, #map-canvas {height: 100%; width: 100%}  </style>
 
@@ -25,40 +62,36 @@ initialize_mysql_connection();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Google maps api -->
-  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    
   <!-- ##################################################################### -->
   <!-- My CSS -->
   <link rel="stylesheet" type="text/css" href="../css/styles.css"/>
   <!-- My javascript -->
   <script src="../map.js"></script>
+    
+    
 
-  <script>
-  var map;
-  var lat = 51.05972991;
-  var lon = 3.8229769;
-  var id;
-  position: null;
-  var myPos = new google.maps.LatLng(51.04972991,3.7229769);
+<?php
+$middle_lat = ($lats[0] + $lats[count($lats)-1])/2;
+$middle_lon = ($lons[0] + $lons[count($lons)-1])/2;
+?>
+
+    <script>
+
+function initialize() {
+var myPos = new google.maps.LatLng(51.04972991,3.7229769);
   
   var myMarker = new google.maps.Marker({
         position: myPos,
         icon: "../resources/MarkerWithSunglasses.png"
       });;
-	$.post('HotelQuest.php', {Lati: lat});
-	$.post('HotelQuest.php', {Longi: lon});
-	
-
-
-    google.maps.event.addDomListener(window, 'load', function(){
-		var mapOptions = {
+	  var mapOptions = {
     zoom: 15,
-    center: myPos,
+	
+    center: new google.maps.LatLng(51.04972991,3.7229769),
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
-      map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-	
-      myMarker.setMap(map);
 
       // location spoofer: https://addons.mozilla.org/en-US/firefox/addon/location-guard/
       // bestaat denk ik ook voor chroom
@@ -75,18 +108,51 @@ initialize_mysql_connection();
       },function() {
 		  alert("Code: " + error.message);
 		}, mapOptions);
-	  
+	  myMarker.setPosition(myPos);
     });
-	});
-	
+
+  
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+
+  var PathCoordinates = [
+  ];
+
+
+
+  <?php
+    for ($i = 0; $i < $pathlength; $i++) {
+
+
+      echo "PathCoordinates.push(new google.maps.LatLng(";
+      echo $lats[$i];
+      echo ",";
+      echo $lons[$i];
+      echo "));";
+    }
+  ?>
+
+
+  var ShortestPath = new google.maps.Polyline({
+    path: PathCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
+  ShortestPath.setMap(map);
+  myMarker.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-
-
   </head>
   <body>
-
-    <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -164,9 +230,5 @@ initialize_mysql_connection();
       </div><!-- /.container-fluid -->
     </nav>
     <div id="map-canvas"></div>
-
-
-
-
   </body>
-  </html>
+</html>

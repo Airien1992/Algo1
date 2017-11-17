@@ -98,7 +98,7 @@
                   $_SESSION['timeout'] = time();
                   $_SESSION['username']=$User;
                   close_mysql_connection();
-				  header('Location: HotelQuest.php');
+				  header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport="foot"');
 
 				  echo 'You have entered valid use name and password';
         }
