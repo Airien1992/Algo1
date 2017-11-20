@@ -166,12 +166,27 @@ function getShortestPathDijkstra($from_node, $to_node, $transport){
 	return array($current_dist, $path);
 }
 
-function json_dijkstra($from_lat, $from_lon, $too_node, $transport){
+function json_dijkstra($from_lat, $from_lon, $transport){
 	global $mysqli;
+	
 
   $access_transport = voertuig($transport); // om een mooie string met uw voertuig te krijgen
   $from_node = getNodeId($from_lat, $from_lon, $access_transport); // complete implementation in func.php
-  $to_node = $too_node;
+   $sql = "SELECT lat,lon from resaurants
+	where lat + 0.02 > '$from_lat'
+	and   lat - 0.02 < '$from_lat'
+	and   lon + 0.01 > '$from_lon'
+	and   lon - 0.01 < '$from_lon'
+	order by ('$from_lat'-lat)*('$from_lat'-lat) + ('$from_lon'-lon)*('$from_lon'-lon) limit 1";
+	$retval = $mysqli->query($sql);
+  if($retval && $row = $retval->fetch_assoc()){
+    $to_lat= $row['lat'];
+	$to_lon= $row['lon'];
+  } else{
+	  echo "Unable to find lat '$sql'".PHP_EOL;
+	  return null;
+  }
+  $to_node = getNodeId($to_lat, $to_lon, $access_transport);
   //$to_node = getNodeId($to_lat, $to_lon, $access_transport);
   // To think about: what if there is no path between from_node and to_node?
   // add a piece of code here (after you have a working Dijkstra implementation)

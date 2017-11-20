@@ -10,15 +10,13 @@ try{
 	if(isset($_GET['from_lat'])) $from_lat = $_GET['from_lat']; else throw new Exception("Input Error: from_lat not set", 1);
 	if(isset($_GET['from_lon'])) $from_lon = $_GET['from_lon']; else throw new Exception("Input Error: from_lon not set", 2);
 	if(isset($_GET['transport'])) $transport = $_GET['transport']; else throw new Exception("Input Error: transport not set", 3);
-	echo "HI";
-	$to_node="'1634943259'";
-	echo "good";
-	$data = json_dijkstra($from_lat, $from_lon ,$to_node, $transport);
-	echo "LO";
+
+	//checkLonLat($from_lat, $from_lon); // check for out of bound
+
+	$data = json_dijkstra($_GET['from_lat'], $_GET['from_lon'], $_GET['transport']);
 }
 catch(Exception $e){
 	echo "<p>".$e->getMessage()."</p>";
-	echo "nooooo";
 	exit();
 }
 $dijkstra = json_decode($data);
