@@ -148,28 +148,12 @@ function initialize() {
       myMarker.setPosition(myPos);
 	  var test = [
   ];
-	  <?php
-echo "test.push(new google.maps.LatLng(myPos.lat(),myPos.lng()));";
-?>
-test.forEach(function(item, index, array) {
-  alert(item);
-});
-
-
-
-              
             }
-          
         );
-	
-
   ShortestPath.setMap(map);
   myMarker.setMap(map);
 }
-
 google.maps.event.addDomListener(window, 'load', initialize);
-document.writeln(myPos.lat());
-
     </script>
 	
     
@@ -195,8 +179,6 @@ document.writeln(myPos.lat());
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Game <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">User: <?php echo $gebruiker ?></a></li>
-				<li><a href="#">Lat: <?php echo setters(); ?></a></li>
-				<li><a href="#">Lat: <?php echo $longit = $_GET['Longi']; ?></a></li>
                 <li><a href="#">My score:  2504</a></li>
                 <li><a href="#">Waypoints:  23/45</a></li>
                 <li role="separator" class="divider"></li>
