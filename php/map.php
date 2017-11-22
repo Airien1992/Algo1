@@ -76,14 +76,14 @@ $middle_lon = ($lons[0] + $lons[count($lons)-1])/2;
 ?>
 
     <script>
+	var myPos ;
 
 function initialize() {
-var myPos = new google.maps.LatLng(51.04972991,3.7229769);
   
   var myMarker = new google.maps.Marker({
         position: myPos,
         icon: "../resources/MarkerWithSunglasses.png"
-      });;
+      });
 	  var mapOptions = {
     zoom: 15,
 	
@@ -98,12 +98,13 @@ var myPos = new google.maps.LatLng(51.04972991,3.7229769);
       // 2) Fixed Location -> zorg dat onderaan "Fixed location disables geolocation" aangevinkt staat
       // 3) plaats in de addon de marker waar je maar wilt
       setInterval(function(){
-        position=navigator.geolocation.getCurrentPosition(function(location) {
-          lat = location.coords.latitude;
-          lon = location.coords.longitude;
-          myPos = new google.maps.LatLng(lat, lon);
-          myMarker.setPosition(myPos);
-      },function() {
+		position=navigator.geolocation.getCurrentPosition(function(location) {
+		  lat = location.coords.latitude;
+		  lon = location.coords.longitude;
+		  myPos = new google.maps.LatLng(lat, lon);
+		  myMarker.setPosition(myPos);
+		  
+	  },function() {
 		  alert("Code: " + error.message);
 		}, mapOptions);
 	  myMarker.setPosition(myPos);
@@ -122,7 +123,9 @@ var myPos = new google.maps.LatLng(51.04972991,3.7229769);
 
   <?php
     for ($i = 0; $i < $pathlength; $i++) {
-
+		
+		
+	
 
       echo "PathCoordinates.push(new google.maps.LatLng(";
       echo $lats[$i];
@@ -140,14 +143,36 @@ var myPos = new google.maps.LatLng(51.04972991,3.7229769);
     strokeOpacity: 1.0,
     strokeWeight: 2
   });
+  map.addListener('rightclick', function(event){
+      myPos= new google.maps.LatLng(event.latLng.lat(),event.latLng.lng()),
+      myMarker.setPosition(myPos);
+	  var test = [
+  ];
+	  <?php
+echo "test.push(new google.maps.LatLng(myPos.lat(),myPos.lng()));";
+?>
+test.forEach(function(item, index, array) {
+  alert(item);
+});
+
+
+
+              
+            }
+          
+        );
+	
 
   ShortestPath.setMap(map);
   myMarker.setMap(map);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+document.writeln(myPos.lat());
 
     </script>
+	
+    
   </head>
   <body>
   <nav class="navbar navbar-default">
@@ -170,7 +195,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Game <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#">User: <?php echo $gebruiker ?></a></li>
-				<li><a href="#">Lat: <?php echo $latit = $_GET['Lati']; ?></a></li>
+				<li><a href="#">Lat: <?php echo setters(); ?></a></li>
 				<li><a href="#">Lat: <?php echo $longit = $_GET['Longi']; ?></a></li>
                 <li><a href="#">My score:  2504</a></li>
                 <li><a href="#">Waypoints:  23/45</a></li>
@@ -221,6 +246,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
               <ul class="dropdown-menu">
                 <li><a href="#">forfeit game</a></li>
                 <li><a href="#">report misconduct</a></li>
+				<li><a onclick="UpdateMap()">update</a></li>
               </ul>
             </li>
           </ul>

@@ -97,6 +97,10 @@ function getNodeId($from_lat, $from_lon, $transport){
 	  return null;
   }
 }
+	function setters(){
+global $jaj;
+$jaj= "<script>document.writeln(myPos.lat()); </script>";
+echo '$jaj';}
 
 function getShortestPathDijkstra($from_node, $to_node, $transport){
 	global $mysqli;

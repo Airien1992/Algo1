@@ -3,6 +3,8 @@
    session_start();
    require_once "config.php";
    require_once "func.php";
+   $_SESSION['valid']=false;
+   echo $_SESSION['valid'];
 ?>
 
 <?
@@ -79,8 +81,10 @@
 
       <h2>Enter Validation data</h2>
       <div class = "container form-signin">
-
-         <?php
+	  <script>
+	  var test = 5;
+	  if(test==4){
+		 <?php
             $msg = '';
             if (isset($_POST['login']) && !empty($_POST['username'])
                && !empty($_POST['password'])) {
@@ -97,17 +101,32 @@
                   $_SESSION['valid'] = true;
                   $_SESSION['timeout'] = time();
                   $_SESSION['username']=$User;
-                  close_mysql_connection();
-				  header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport="foot"');
+                  
+				  
+				  close_mysql_connection();
+				  //header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport="foot"');
 
-				  echo 'You have entered valid use name and password';
+		
+		echo 'You have entered valid use name and password';
         }
                 else {
                   $msg = 'Wrong username or password';
                   close_mysql_connection();
                }
             }
-         ?>
+	  ?>}
+		</script>
+		 <script type="text/javascript">
+			if(<?php echo $_SESSION['valid']; ?>){
+				alert("ju");
+				var position=navigator.geolocation.getCurrentPosition(function(location) {
+				var lat = location.coords.latitude;
+				var lon = location.coords.longitude; 
+				window.location.href = "map.php?from_lat="+lat +"&from_lon="+lon+"&transport=foot";	
+						
+				});
+			}
+			</script>
       </div> <!-- /container -->
 
       <div class = "container">
@@ -123,7 +142,7 @@
 				<input type = "password" class = "form-control" name = "password" placeholder = "password" required>
 			</div>
 			<div class="form-group">
-				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "login">Login</button>
+				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "login" Id="log">Login</button>
 				<a href="register.php">Registreren</a>
 				<a href="recovery.php">Recovery</a>
 			</div>
