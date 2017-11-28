@@ -226,7 +226,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">forfeit game</a></li>
+                <li><a href="logout.php">forfeit game</a></li>
                 <li><a href="#">report misconduct</a></li>
 				<li><a onclick="UpdateMap()">update</a></li>
               </ul>

@@ -4,7 +4,6 @@
    require_once "config.php";
    require_once "func.php";
    $_SESSION['valid']=false;
-   echo $_SESSION['valid'];
 ?>
 
 <?
@@ -81,9 +80,6 @@
 
       <h2>Enter Validation data</h2>
       <div class = "container form-signin">
-	  <script>
-	  var test = 5;
-	  if(test==4){
 		 <?php
             $msg = '';
             if (isset($_POST['login']) && !empty($_POST['username'])
@@ -104,7 +100,7 @@
                   
 				  
 				  close_mysql_connection();
-				  //header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport="foot"');
+				  //header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport=foot');
 
 		
 		echo 'You have entered valid use name and password';
@@ -114,8 +110,7 @@
                   close_mysql_connection();
                }
             }
-	  ?>}
-		</script>
+         ?>
 		 <script type="text/javascript">
 			if(<?php echo $_SESSION['valid']; ?>){
 				alert("ju");
@@ -145,6 +140,7 @@
 				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "login" Id="log">Login</button>
 				<a href="register.php">Registreren</a>
 				<a href="recovery.php">Recovery</a>
+				<a href="logout.php">logout</a>
 			</div>
 			   
          </form>
