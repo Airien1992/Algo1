@@ -1,6 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'func.php';
+ini_set('session.save_path', '/var/www/html/project3/Production/resources/');
 session_start();
 if($_SESSION['valid'] == true){   $gebruiker = $_SESSION['username']; }
 else {   $gebruiker = "ufo";  }
@@ -73,6 +74,10 @@ for ($i = 0; $i < $pathlength; $i++) {
 <?php
 $middle_lat = ($lats[0] + $lats[count($lats)-1])/2;
 $middle_lon = ($lons[0] + $lons[count($lons)-1])/2;
+echo $names;
+foreach($_SESSION AS $key => $value) {
+  echo "$key -> $value";
+}
 ?>
 
     <script>

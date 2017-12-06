@@ -1,6 +1,5 @@
 <?php
    ob_start();
-   session_start();
    require_once "config.php";
    require_once "func.php";
    $_SESSION['valid']=false;
@@ -82,11 +81,13 @@
       <div class = "container form-signin">
 		 <?php
             $msg = '';
+			
             if (isset($_POST['login']) && !empty($_POST['username'])
                && !empty($_POST['password'])) {
 
 				global $Pass;
 				global $mysqli;
+				global $names=[];
 				$User = $_POST['username'];
 				$Pass = $_POST['password'];
 				$mysqli = initialize_mysql_connection();
@@ -94,13 +95,22 @@
 				$result=$mysqli->query($sql);
 				$row=$result->fetch_assoc();
 				if( $row['username']==$User){
+				  ini_set('session.save_path', '/var/www/html/project3/Production/resources/');
+				  session_id($User);
+				  $names.push(session_id());
+				  session_start();
+				  $_SESSION['username']=$User;
+				  $_SESSION['Id'] = session_id();
                   $_SESSION['valid'] = true;
                   $_SESSION['timeout'] = time();
-                  $_SESSION['username']=$User;
+				  foreach($_SESSION AS $key => $value) {
+					  
+				  echo "$key -> $value";
+}
                   
 				  
 				  close_mysql_connection();
-				  //header('Location: map.php?from_lat=51.04972991&from_lon=3.7229769&transport=foot');
+				  
 
 		
 		echo 'You have entered valid use name and password';
