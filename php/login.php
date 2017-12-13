@@ -3,6 +3,9 @@
    require_once "config.php";
    require_once "func.php";
    $_SESSION['valid']=false;
+   
+global $names;
+$names=[];
 ?>
 
 <?
@@ -20,12 +23,15 @@
          body {
             padding-top: 40px;
             padding-bottom: 40px;
-            background-color: #ADABAB;
+            background-image: url("../resources/hotel.jpg");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
          }
 
          .form-signin {
             max-width: 330px;
-            padding: 15px;
+            padding: 30px;
             margin: 0 auto;
             color: #017572;
          }
@@ -61,15 +67,16 @@
          }
 
          .form-signin input[type="password"] {
-            margin-bottom: 10px;
+            margin-bottom: 100px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-color:#017572;
          }
 
          h2{
+			font-size: 50px;
             text-align: center;
-            color: #017572;
+            color: #5F9EA0;
          }
       </style>
 
@@ -77,7 +84,7 @@
 
    <body>
 
-      <h2>Enter Validation data</h2>
+      <h2>The pursuit of happines</h2>
       <div class = "container form-signin">
 		 <?php
             $msg = '';
@@ -87,7 +94,7 @@
 
 				global $Pass;
 				global $mysqli;
-				global $names=[];
+				$names=array();
 				$User = $_POST['username'];
 				$Pass = $_POST['password'];
 				$mysqli = initialize_mysql_connection();
@@ -97,12 +104,13 @@
 				if( $row['username']==$User){
 				  ini_set('session.save_path', '/var/www/html/project3/Production/resources/');
 				  session_id($User);
-				  $names.push(session_id());
+				  array_push($names,$User);
 				  session_start();
 				  $_SESSION['username']=$User;
 				  $_SESSION['Id'] = session_id();
                   $_SESSION['valid'] = true;
                   $_SESSION['timeout'] = time();
+				  
 				  foreach($_SESSION AS $key => $value) {
 					  
 				  echo "$key -> $value";
@@ -112,7 +120,7 @@
 				  close_mysql_connection();
 				  
 
-		
+		echo $names[0];
 		echo 'You have entered valid use name and password';
         }
                 else {
