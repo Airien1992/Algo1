@@ -28,6 +28,11 @@ $names=[];
 			background-repeat: no-repeat;
 			background-size: cover;
          }
+		 
+		 form{
+			 border: 3px solid #f1f1f1;
+		 }
+		 
 
          .form-signin {
             max-width: 330px;
@@ -35,11 +40,17 @@ $names=[];
             margin: 0 auto;
             color: #017572;
          }
+		 
+		 .form-signin .form-group{
+			 font-size: 25px;
+			 align: center;
+		 }
+		 
 
          .form-signin .form-signin-heading,
          .form-signin .checkbox {
             margin-bottom: 10px;
-			size: 100px
+			font-size: 10px;
          }
 
          .form-signin .checkbox {
@@ -47,14 +58,23 @@ $names=[];
          }
 
          .form-signin .form-control {
-            position: relative;
-            height: auto;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: 10px;
-            font-size: 16px;
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
          }
+		 
+		 .login_btn{
+			 background-color: #5F9EA0;
+			 color: white;
+			 padding: 14px 20px;
+			 margin: 8px 0;
+			 border: none;
+			 cursor: pointer;
+			 width: 100%;
+		 }
 
          .form-signin .form-control:focus {
             z-index: 2;
@@ -79,10 +99,16 @@ $names=[];
             text-align: center;
             color: #5F9EA0;
          }
+		 h3{
+			 font-size: 30px;
+			 color: #5F9EA0;
+		 }
       </style>
 
    </head>
 
+   
+   
    <body>
 
       <h2>The pursuit of happines</h2>
@@ -148,18 +174,19 @@ $names=[];
          <form class = "form-signin" role = "form" action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method = "post">
             <h4 class = "form-signin-heading"><?php echo $msg; ?></h4>
             <div class="form-group">
-				<label >Username:</label>
+				<label >Username</label>
 				<input type = "text" class = "form-control" name = "username" placeholder = "username" required autofocus></br>
 			</div>
+			
 			<div class="form-group">
-				<label>Password:</label>
+				<label>Password</label>
 				<input type = "password" class = "form-control" name = "password" placeholder = "password" required>
 			</div>
 			<div class="form-group">
-				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "login" Id="log">Login</button>
+				<button class = "login_btn" type = "submit" name = "login" Id="log">Login</button>
 				<a href="register.php">Registreren</a>
 				<a href="recovery.php">Recovery</a>
-				<a href="logout.php">logout</a>
+				<a href="logout.php">Logout</a>
 			</div>
 			   
          </form>
