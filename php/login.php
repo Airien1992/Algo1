@@ -39,6 +39,7 @@ $names=[];
          .form-signin .form-signin-heading,
          .form-signin .checkbox {
             margin-bottom: 10px;
+			size: 100px
          }
 
          .form-signin .checkbox {
