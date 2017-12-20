@@ -20,8 +20,15 @@
          body {
             padding-top: 40px;
             padding-bottom: 40px;
-            background-color: #ADABAB;
+            background-image: url("../resources/hotel.jpg");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
          }
+		 
+		 form{
+			 border: 3px solid #f1f1f1;
+		 }
 
          .form-signin {
             max-width: 330px;
@@ -34,19 +41,24 @@
          .form-signin .checkbox {
             margin-bottom: 10px;
          }
+		 
+		 .form-signin .form-group{
+			 font-size: 25px;
+			 align: center;
+			 color: white;
+		 }
 
          .form-signin .checkbox {
             font-weight: normal;
          }
 
          .form-signin .form-control {
-            position: relative;
-            height: auto;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: 10px;
-            font-size: 16px;
+            width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
          }
 
          .form-signin .form-control:focus {
@@ -68,16 +80,43 @@
          }
 
          h2{
+            font-size: 50px;
             text-align: center;
-            color: #017572;
+            color: white;
          }
+		 
+		 h4{
+			 font-size: 30px;
+			 color: white;
+		 }
+		 .btn_home{
+			 background-color: #5F9EA0;
+			 color: white;
+			 padding: 14px 20px;
+			 margin: 8px 0;
+			 border: none;
+			 cursor: pointer;
+			 width: 100%;
+		 }
+		 .btn{
+			 background-color: white;
+			 color: #5F9EA0;
+			 padding: 14px 5px;
+			 margin: 8px 0;
+			 border: none;
+			 cursor: pointer;
+			 width: 100%;
+		 }
+		 
+		 
+		 
       </style>
 
    </head>
 
    <body>
 
-      <h2>Enter Validation data</h2>
+      <h2>Enter validation data</h2>
       <div class = "container form-signin">
 
          <?php
@@ -125,8 +164,8 @@
 				<input type = "text" class = "form-control" name = "naam" placeholder = "naam" required>
 			</div>
 			<div class="form-group">
-				<button class = "btn btn-lg btn-primary btn-block" type = "submit" name = "recover">Recover</button>
-				<a href="login.php">Go back to Login page</a>
+				<button class = "btn_home" type = "submit" name = "recover">Recover</button>
+				<button class = "btn" type = "submit" ><a href="login.php">Go back to Login page</a></button>
 			</div>
 			   
          </form>
